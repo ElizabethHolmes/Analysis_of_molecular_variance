@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+# dealing with command line input
 import sys
 file = open(sys.argv[1])
+
+# reading information from file
 populations = []
 allele_profiles = []
 delimiter = '\t'
@@ -12,20 +15,73 @@ for line in file:
 	alleles = split[1:]
 	allele_profiles.append(alleles)
 file.close()
-	
+
+# making an array of the populations	
 different_populations = []
 for population in populations:
 	if population not in different_populations:
 		different_populations.append(population)
 
+# writing file headers
 output = open('PhiPT_matrix.txt', 'w')
 output.write('PhiPT matrix' + '\n\t')
 for different_population in different_populations:
 	output.write(different_population + '\t')
 output.write('\n')
 
-total_populations = len(different_populations)
 population_list = different_populations
+
+# calculating pairwise PhiPT values
+total_populations = 2
+PhiPTs = []
+for i in range(len(different_populations)-1):
+	pop_PhiPTs = ['-']
+	pop1 = different_populations[i]
+	index = i + 1
+	while index < len(different_populations):
+		pop2 = different_populations[index]
+		population_list = [pop1, pop2]
+		allele_profiles = []
+		populations = []
+		file = open(sys.argv[1])
+		for line in file:	
+			if line.startswith(different_populations[i]) or line.startswith(different_populations[index]):
+				split = line.rstrip().split(delimiter)
+				alleles = split[1:]
+				allele_profiles.append(alleles)
+				population = split[0]
+				populations.append(population)
+		PhiPT = findPhiPT()
+		pop_PhiPTs.append(PhiPT)
+		index = index + 1
+		file.close()
+	PhiPTs.append(pop_PhiPTs)
+
+# calculating overall PhiPT value
+total_populations = len(different_populations)
+overall_PhiPT = findPhiPT()
+
+# writing pairwise PhiPT values to file
+for i in range(len(different_populations)-1):
+	output.write(different_populations[i] + '\t')
+	for x in range(0,i+1):
+		PhiPT_list = PhiPTs[x]
+		output.write(str(PhiPT_list[i-x]) + '\t')
+	PhiPT_list = PhiPTs[i]
+	for x in range(1,len(different_populations)-i):
+		output.write(str(PhiPT_list[x]) + '\t')
+	output.write('\n')
+
+output.write(different_populations[len(different_populations)-1] + '\t')
+for x in range(0,len(different_populations)-1):
+	PhiPT_list = PhiPTs[x]
+	output.write(str(PhiPT_list[len(different_populations)-x-1]) + '\t')
+output.write('-' + '\n\n')
+
+# writing overall PhiPT value to file
+output.write('Overall PhiPT:' + '\t' + str(overall_PhiPT))
+
+# function for calculating PhiPT
 def findPhiPT():
 	differences_matrix = []
 	for i in range(len(allele_profiles)-1):
@@ -90,48 +146,3 @@ def findPhiPT():
 	else:
 		PhiPT = float(VAP/(VAP + MSWP))
 	return PhiPT;
-
-overall_PhiPT = findPhiPT()
-
-total_populations = 2
-PhiPTs = []
-for i in range(len(different_populations)-1):
-	pop_PhiPTs = ['-']
-	pop1 = different_populations[i]
-	index = i + 1
-	while index < len(different_populations):
-		pop2 = different_populations[index]
-		population_list = [pop1, pop2]
-		allele_profiles = []
-		populations = []
-		file = open(sys.argv[1])
-		for line in file:	
-			if line.startswith(different_populations[i]) or line.startswith(different_populations[index]):
-				split = line.rstrip().split(delimiter)
-				alleles = split[1:]
-				allele_profiles.append(alleles)
-				population = split[0]
-				populations.append(population)
-		PhiPT = findPhiPT()
-		pop_PhiPTs.append(PhiPT)
-		index = index + 1
-		file.close()
-	PhiPTs.append(pop_PhiPTs)
-
-for i in range(len(different_populations)-1):
-	output.write(different_populations[i] + '\t')
-	for x in range(0,i+1):
-		PhiPT_list = PhiPTs[x]
-		output.write(str(PhiPT_list[i-x]) + '\t')
-	PhiPT_list = PhiPTs[i]
-	for x in range(1,len(different_populations)-i):
-		output.write(str(PhiPT_list[x]) + '\t')
-	output.write('\n')
-
-output.write(different_populations[len(different_populations)-1] + '\t')
-for x in range(0,len(different_populations)-1):
-	PhiPT_list = PhiPTs[x]
-	output.write(str(PhiPT_list[len(different_populations)-x-1]) + '\t')
-output.write('-' + '\n\n')
-
-output.write('Overall PhiPT:' + '\t' + str(overall_PhiPT))
