@@ -28,7 +28,7 @@ Australia | gene1:allele3 | gene2:allele3 | gene3:allele2
 Australia | gene1:allele2 | gene2:allele3 | gene3:allele4 
 
 ### *Example*
-To calculate the difference between the bacterial populations described in the example input file provided, bacterial_populations.txt, the command would be:
+To calculate the difference between the bacterial populations described in the example input file provided, 'bacterial_populations.txt', the command would be:
 
     ./analysis_of_molecular_variance.py bacterial_populations.txt
 
