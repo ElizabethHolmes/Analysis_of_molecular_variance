@@ -16,7 +16,7 @@ Analysis_of_molecular_variance is not associated with a paper; to cite it please
 Analysis_of_molecular_variance requires Python.
 
 ## Usage
-Analysis_of_molecular_variance takes as its input a tab-delimited text file comprising a list of samples, with the leftmost column containing the population name for each sample (e.g. the country from which the sample was derived). There can be any number of different populations. The remaining columns, of which there may be any number, contain assignments for categorical characteristics of the sample (e.g. MLST allele numbers). So an input file might look like:
+Analysis_of_molecular_variance takes as its input a tab-delimited text file, such as the 'bacterial_populations.txt' file provided, comprising a list of samples, with the leftmost column containing the population name for each sample (e.g. the country from which the sample was derived). There can be any number of different populations. The remaining columns, of which there may be any number, contain assignments for categorical characteristics of the sample (e.g. MLST allele numbers). The example input file provided, 'bacterial_populations.txt', looks like this:
 
  | | | |
 --- | --- | --- | ---
@@ -28,7 +28,7 @@ Australia | gene1:allele3 | gene2:allele3 | gene3:allele2
 Australia | gene1:allele2 | gene2:allele3 | gene3:allele4 
 
 ### *Example*
-To calculate the difference between bacterial populations as per the example in the 'About' section, the command might be:
+To calculate the difference between the bacterial populations described in the example input file provided, bacterial_populations.txt, the command would be:
 
     ./analysis_of_molecular_variance.py bacterial_populations.txt
 
