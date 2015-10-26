@@ -1,0 +1,6 @@
+UK  gene1:allele1 gene2:allele1 gene3:allele4
+UK  gene1:allele1 gene2:allele2 gene3:allele3
+USA gene1:allele2 gene2:allele2 gene3:allele1
+USA gene1:allele2 gene2:allele1 gene3:allele4
+Australia gene1:allele3 gene2:allele3 gene3:allele2
+Australia gene1:allele2 gene2:allele3 gene3:allele4
