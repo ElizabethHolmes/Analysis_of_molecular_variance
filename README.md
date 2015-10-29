@@ -4,8 +4,6 @@ Analysis_of_molecular_variance is a Python script for performing an analysis of 
 
 For example, AMOVA could be used to determine how closely related bacterial populations collected from different countries are, from which inferences could be made about how the bacteria have spread.
 
-** PLEASE NOTE: Analysis_of_molecular_variance is one of my first scripts written as a beginner programmer and so I apologise if the code is inelegant, unconventional or otherwise sub-optimal; it works for the intended purpose and I provide it in case it might be useful to others, but with no guarantees. **
-
 ## Citation
 Analysis_of_molecular_variance is not associated with a paper; to cite it please use:
 
